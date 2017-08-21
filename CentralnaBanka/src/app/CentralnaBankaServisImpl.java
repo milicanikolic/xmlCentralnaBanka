@@ -1,8 +1,15 @@
 package app;
 
+import generisaniBanka.BankaServis;
+import generisaniBanka.Mt103;
+import generisaniBanka.Mt900;
+import generisaniBanka.Mt910;
+
 import java.io.StringReader;
 import java.io.Writer;
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.UUID;
 
 import javax.jws.WebService;
@@ -10,14 +17,13 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.namespace.QName;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
+import javax.xml.ws.Service;
 
 import mt102.Mt102;
 import mt102.PojedinacnoPlacanjeMt102;
-import mt103.Mt103;
-import mt900.Mt900;
-import mt910.Mt910;
 import banka.Banka;
 
 import com.marklogic.client.eval.ServerEvaluationCall;
@@ -29,7 +35,19 @@ endpointInterface = "app.CentralnaBankaServis")
 public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 
 	
+	private URL wsdlBankaDunznik;
+	private URL wsdlBankaPoverilac;
+
+    private QName serviceNameBanka = new QName("http://ftn.uns.ac.rs/banka","BankaServis");
+    private QName portNameBanka = new QName("http://ftn.uns.ac.rs/banka","Banka");
+	
 	public void primiMt103(Mt103 mt103) {
+		
+		try {
+			wsdlBankaDunznik=new URL("http://NINA:8085/Banka/BankaServis?wsdl");
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		}
 		
 		// *****************************************************************************************************
 		// kopirati u CentralBankaImpl, obrisati app paket, importovati klase mt-ova stare
@@ -48,7 +66,8 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		try {
 			bankaDuznik = unmarshaluj(Banka.class, new StreamSource(
 					new StringReader(odgovor)));
-		} catch (JAXBException e) {
+			wsdlBankaDunznik=new URL(StartApp.getWsdl(bankaDuznik.getPort()));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println("BANKA DUZNIK JE: "+bankaDuznik.getNaziv());
@@ -79,7 +98,8 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		try {
 			bankaPoverioc = unmarshaluj(Banka.class, new StreamSource(
 					new StringReader(odgovor1)));
-		} catch (JAXBException e) {
+			wsdlBankaPoverilac=new URL(StartApp.getWsdl(bankaPoverioc.getPort()));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println("BANKA POVERIOCA JE: "+bankaPoverioc.getNaziv());
@@ -110,6 +130,13 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		mt900.setSifraValute(mt103.getSifraValute());
 		// posalti mt900 preko ws za banku sa swiftKodom mt103.getSwiftBanDuznik();
 
+		Service service = Service.create(wsdlBankaDunznik, serviceNameBanka);
+        BankaServis inter = service
+                .getPort(portNameBanka, BankaServis.class);
+
+        inter.primiMt900(mt900);
+		
+		
 		System.out.println("KREIRANA MT900: IDPORUKE: "+mt900.getIdPoruke()+"\n SWIFTBANKEDUZNIKA: "+mt900.getSwiftBanDuznik()
 				+"\n OBRACUNSKI RACUNA BANKE DUZNIKA: "+mt900.getObracunskiRacBanDuznik()+
 				"\n ID PORUKE NALOGA: "+mt900.getIdPorukeNaloga()+
@@ -136,11 +163,19 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 				"\n SIFRA VALUTE: "+mt910.getSifraValute());
 		
 		// poslati mt910 preko ws za banku sa swiftKodom mt103.getSwiftBanPoverioc();
+		Service service1 = Service.create(wsdlBankaPoverilac, serviceNameBanka);
+        BankaServis inter1 = service
+                .getPort(portNameBanka, BankaServis.class);
 
+        inter1.odobriSredstva(mt103, mt910);
+
+		
 	}
 
 	
 	public void primiMt102(Mt102 mt102) {
+		
+		
 		
 		Banka bankaDuznik=null;
 		Banka bankaPoverilac=null;
@@ -152,7 +187,8 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		try {
 			bankaDuznik = unmarshaluj(Banka.class, new StreamSource(
 					new StringReader(odgovor1)));
-		} catch (JAXBException e) {
+			wsdlBankaDunznik=new URL(StartApp.getWsdl(bankaDuznik.getPort()));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -164,7 +200,8 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		try {
 			bankaPoverilac = unmarshaluj(Banka.class, new StreamSource(
 					new StringReader(odgovor2)));
-		} catch (JAXBException e) {
+			wsdlBankaPoverilac=new URL(StartApp.getWsdl(bankaPoverilac.getPort()));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -215,6 +252,11 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		mt900.setSifraValute(mt102.getZaglavljeMt102().getSifraValute());
 		// posalti mt900 preko ws za banku sa swiftKodom mt102.getZaglavljeMt102().getSwiftBankaDuznik();
 		
+		Service service = Service.create(wsdlBankaDunznik, serviceNameBanka);
+        BankaServis inter = service
+                .getPort(portNameBanka, BankaServis.class);
+        inter.primiMt900(mt900);
+		
 		
 		System.out.println("KREIRANJE MT910");
 		//SLANJE MT910 I MT102 ZA POVERIOCA
@@ -229,7 +271,11 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		mt910.setSifraValute(mt102.getZaglavljeMt102().getSifraValute());
 		// poslati mt910 preko ws za banku sa swiftKodom mt102.getZaglavljeMt102().getSwiftBanPoverioc();
 
-		
+		Service service1 = Service.create(wsdlBankaPoverilac, serviceNameBanka);
+        BankaServis inter1 = service
+                .getPort(portNameBanka, BankaServis.class);
+
+        //POZVATI METODU KOJA PRIMA MT102 I MT910
 	}
 	
 	

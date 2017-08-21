@@ -1,5 +1,7 @@
 package app;
 
+import generisaniBanka.Mt103;
+
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -9,7 +11,6 @@ import javax.jws.soap.SOAPBinding.Use;
 import javax.xml.ws.RequestWrapper;
 
 import mt102.Mt102;
-import mt103.Mt103;
 
 
 

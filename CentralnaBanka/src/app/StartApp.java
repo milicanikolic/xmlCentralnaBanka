@@ -1,5 +1,11 @@
 package app;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Properties;
+import java.util.Set;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
@@ -15,15 +21,44 @@ public class StartApp {
 
 	private static DatabaseClient client;
 	private static String trenutniPort;
+	private static HashMap<String, String> portWsdl;
 
 	public StartApp() {
 
+		
+		
+		
+		
 	}
 
 	@PostConstruct
 	public void init() {
 
 		System.out.println("POKRENUO CENTRALNU BANKU");
+		//citanje properties fajla
+		Properties prop=new Properties();
+		ClassLoader loader=Thread.currentThread().getContextClassLoader();
+		InputStream input=null;
+		
+		portWsdl=new HashMap<>();
+		
+		try{
+			input=loader.getResourceAsStream("config.properties");
+			prop.load(input);
+			
+			Set<Object> keys=prop.keySet();
+			for(Object ob:keys){
+				portWsdl.put(ob.toString(), prop.getProperty(ob.toString()));
+			}
+			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		System.out.println("MApa je:");
+		for(String s:portWsdl.keySet()){
+			System.out.println(s+" : "+portWsdl.get(s));
+		}
+		
 		otvoriKonekciju();
 
 	}
@@ -34,7 +69,7 @@ public class StartApp {
 	}
 
 	public static void otvoriKonekciju() {
-		client = DatabaseClientFactory.newClient("localhost", 8003, "admin",
+		client = DatabaseClientFactory.newClient("laptop-234234", 8003, "admin",
 				"admin", Authentication.DIGEST);
 
 	}
@@ -57,5 +92,9 @@ public class StartApp {
 
 	public static void setTrenutniPort(String trenutniPort) {
 		StartApp.trenutniPort = trenutniPort;
+	}
+	
+	public static String getWsdl(String port){
+		return portWsdl.get(port);
 	}
 }

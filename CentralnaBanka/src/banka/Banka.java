@@ -1,5 +1,7 @@
 package banka;
 
+import generisaniBanka.Nalog;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class Banka implements Serializable {
 	*/
 	private static final long serialVersionUID = 1L;
 
+	private String port;
 	private String oznakaBanke;// predstavlja ona prve 3 cifre u racunu firme,
 								// po kojima moze da se
 	// vidi u kojoj banci firma ima otvoren racun
@@ -39,8 +42,9 @@ public class Banka implements Serializable {
 		racunIznos = new HashMap<String, RacunUBanci>();
 	}
 
-	public Banka(String naziv, String obracunskiRacun, String swiftCode, BigDecimal iznosObracunskiRacun) {
+	public Banka(String port,String naziv, String obracunskiRacun, String swiftCode, BigDecimal iznosObracunskiRacun) {
 		super();
+		this.port=port;
 		racunFirme = new HashMap<String, String>();
 		this.naziv = naziv;
 		this.obracunskiRacun = obracunskiRacun;
@@ -116,4 +120,13 @@ public class Banka implements Serializable {
 		this.iznosObracunskiRacun = iznosObracunskiRacun;
 	}
 
+	public String getPort() {
+		return port;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
+	}
+
+	
 }
