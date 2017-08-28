@@ -1,5 +1,5 @@
 
-package generisaniBanka;
+package generisani;
 
 import java.util.ArrayList;
 import java.util.List;

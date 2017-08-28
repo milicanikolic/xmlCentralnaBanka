@@ -1,6 +1,6 @@
 package app;
 
-import generisaniBanka.Mt103;
+import generisani.Mt103;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;

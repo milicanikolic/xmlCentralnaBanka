@@ -1,5 +1,5 @@
 
-package generisaniBanka;
+package generisani;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

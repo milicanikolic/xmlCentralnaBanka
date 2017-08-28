@@ -1,5 +1,5 @@
 
-package generisaniBanka;
+package generisani;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -8,16 +8,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for obradiZahtevZaIzvodResponse complex type.
+ * <p>Java class for obradiNalogResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="obradiZahtevZaIzvodResponse">
+ * &lt;complexType name="obradiNalogResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://ftn.uns.ac.rs/presek}presek" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,23 +27,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "obradiZahtevZaIzvodResponse", propOrder = {
+@XmlType(name = "obradiNalogResponse", propOrder = {
     "_return"
 })
-public class ObradiZahtevZaIzvodResponse {
+public class ObradiNalogResponse {
 
     @XmlElement(name = "return", namespace = "")
-    protected Presek _return;
+    protected String _return;
 
     /**
      * Gets the value of the return property.
      * 
      * @return
      *     possible object is
-     *     {@link Presek }
+     *     {@link String }
      *     
      */
-    public Presek getReturn() {
+    public String getReturn() {
         return _return;
     }
 
@@ -52,10 +52,10 @@ public class ObradiZahtevZaIzvodResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link Presek }
+     *     {@link String }
      *     
      */
-    public void setReturn(Presek value) {
+    public void setReturn(String value) {
         this._return = value;
     }
 

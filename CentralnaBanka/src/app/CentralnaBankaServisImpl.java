@@ -1,14 +1,15 @@
 package app;
 
-import generisaniBanka.BankaServis;
-import generisaniBanka.Mt103;
-import generisaniBanka.Mt900;
-import generisaniBanka.Mt910;
+import generisani.BankaServis;
+import generisani.MT103I910;
+import generisani.Mt103;
+import generisani.Mt900;
+import generisani.Mt910;
+
 
 import java.io.StringReader;
 import java.io.Writer;
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
@@ -43,11 +44,7 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 	
 	public void primiMt103(Mt103 mt103) {
 		
-		try {
-			wsdlBankaDunznik=new URL("http://NINA:8085/Banka/BankaServis?wsdl");
-		} catch (MalformedURLException e1) {
-			e1.printStackTrace();
-		}
+	
 		
 		// *****************************************************************************************************
 		// kopirati u CentralBankaImpl, obrisati app paket, importovati klase mt-ova stare
@@ -130,10 +127,12 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		mt900.setSifraValute(mt103.getSifraValute());
 		// posalti mt900 preko ws za banku sa swiftKodom mt103.getSwiftBanDuznik();
 
+		System.out.println("wsdl duznika: "+wsdlBankaDunznik);
 		Service service = Service.create(wsdlBankaDunznik, serviceNameBanka);
         BankaServis inter = service
                 .getPort(portNameBanka, BankaServis.class);
 
+        System.out.println("------------slanje mt900--------------");
         inter.primiMt900(mt900);
 		
 		
@@ -149,7 +148,8 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		Mt910 mt910 = new Mt910();
 		mt910.setIdPoruke(UUID.randomUUID().toString());
 		mt910.setSwiftBanPoverioc(mt103.getSwiftBanPoverioc());
-	//	mt910.setObracunskiRacBanPoverioc(mt103.getObracunskiRacBankePoverioc()); // fali u  Mt103
+		System.out.println("u centralnoj banci mt103 " + mt103.getObracunskiRacunBankePoverioca() );
+		mt910.setObracunskiRacBanPoverioc(mt103.getObracunskiRacunBankePoverioca()); // fali u  Mt103
 		mt910.setIdPorukeNaloga(mt103.getIdPoruke());
 		mt910.setDatumValute(mt103.getDatumValute());
 		mt910.setIznos(mt103.getIznos());
@@ -163,12 +163,42 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 				"\n SIFRA VALUTE: "+mt910.getSifraValute());
 		
 		// poslati mt910 preko ws za banku sa swiftKodom mt103.getSwiftBanPoverioc();
+		System.out.println("wsdl poverioca: "+wsdlBankaPoverilac);
 		Service service1 = Service.create(wsdlBankaPoverilac, serviceNameBanka);
-        BankaServis inter1 = service
+        BankaServis inter1 = service1
                 .getPort(portNameBanka, BankaServis.class);
 
-        inter1.odobriSredstva(mt103, mt910);
-
+        Mt103 mt103Novo=new Mt103();
+        mt103Novo.setDatumNaloga(mt103.getDatumNaloga());
+        mt103Novo.setDatumValute(mt103.getDatumValute());
+        mt103Novo.setDuznik(mt103.getDuznik());
+        mt103Novo.setIdPoruke(mt103.getIdPoruke());
+        mt103Novo.setIznos(mt103.getIznos());
+        mt103Novo.setModelOdobrenja(mt103.getModelOdobrenja());
+        mt103Novo.setModelZaduzenja(mt103.getModelZaduzenja());
+        mt103Novo.setObracunskiRacBankeDuznik(mt103.getObracunskiRacBankeDuznik());
+        mt103Novo.setObracunskiRacunBankePoverioca(mt103.getObracunskiRacunBankePoverioca());
+        mt103Novo.setPozivNaBrOdobrenja(mt103.getPozivNaBrOdobrenja());
+        mt103Novo.setPozivNaBrojZaduzenja(mt103.getPozivNaBrojZaduzenja());
+        mt103Novo.setPrimalac(mt103.getPrimalac());
+        mt103Novo.setRacunDuznik(mt103.getRacunDuznik());
+        mt103Novo.setRacunPoverioca(mt103.getRacunPoverioca());
+        mt103Novo.setSifraValute(mt103.getSifraValute());
+        mt103Novo.setSvrhaPlacanja(mt103.getSvrhaPlacanja());
+        mt103Novo.setSwiftBanDuznik(mt103.getSwiftBanDuznik());
+        mt103Novo.setSwiftBanPoverioc(mt103.getSwiftBanPoverioc());
+        
+        System.out.println("poziva iz centralne banke banku poverioca sa metodom odobriSredstva");
+        System.out.println("**************************************************");
+        System.out.println("u centralnoj banci mt103 racun poverioca " + mt103Novo.getRacunPoverioca());
+        MT103I910 sve=new MT103I910();
+        sve.setMt103N(mt103Novo);
+        sve.setMt910N(mt910);
+       
+       
+      
+        inter1.odobriSredstva(sve);
+        System.out.println("pozvap jeee");
 		
 	}
 

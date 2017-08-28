@@ -1,5 +1,5 @@
 
-package generisaniBanka;
+package generisani;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -12,33 +12,28 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Java class for mt103 complex type.
+ * <p>Java class for stavkaPreseka complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="mt103">
+ * &lt;complexType name="stavkaPreseka">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="idPoruke" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="swiftBanDuznik" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="obracunskiRacBankeDuznik" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="obracunskiRacunBankePoverioca" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="swiftBanPoverioc" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="duznik" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="svrhaPlacanja" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="primalac" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="datumNaloga" type="{http://www.w3.org/2001/XMLSchema}date"/>
  *         &lt;element name="datumValute" type="{http://www.w3.org/2001/XMLSchema}date"/>
- *         &lt;element name="racunDuznik" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="racunDuznika" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="modelZaduzenja" type="{http://www.w3.org/2001/XMLSchema}integer"/>
- *         &lt;element name="pozivNaBrojZaduzenja" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="racunPoverioca" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="pozivNaBrZaduzenja" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="racunPrimaoca" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="modelOdobrenja" type="{http://www.w3.org/2001/XMLSchema}integer"/>
  *         &lt;element name="pozivNaBrOdobrenja" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="iznos" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
- *         &lt;element name="sifraValute" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="smer" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -48,38 +43,23 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "mt103", namespace = "http://ftn.uns.ac.rs/mt103", propOrder = {
-    "idPoruke",
-    "swiftBanDuznik",
-    "obracunskiRacBankeDuznik",
-    "obracunskiRacunBankePoverioca",
-    "swiftBanPoverioc",
+@XmlType(name = "stavkaPreseka", namespace = "http://ftn.uns.ac.rs/presek", propOrder = {
     "duznik",
     "svrhaPlacanja",
     "primalac",
     "datumNaloga",
     "datumValute",
-    "racunDuznik",
+    "racunDuznika",
     "modelZaduzenja",
-    "pozivNaBrojZaduzenja",
-    "racunPoverioca",
+    "pozivNaBrZaduzenja",
+    "racunPrimaoca",
     "modelOdobrenja",
     "pozivNaBrOdobrenja",
     "iznos",
-    "sifraValute"
+    "smer"
 })
-public class Mt103 {
+public class StavkaPreseka {
 
-    @XmlElement(required = true)
-    protected String idPoruke;
-    @XmlElement(required = true)
-    protected String swiftBanDuznik;
-    @XmlElement(required = true)
-    protected String obracunskiRacBankeDuznik;
-    @XmlElement(required = true)
-    protected String obracunskiRacunBankePoverioca;
-    @XmlElement(required = true)
-    protected String swiftBanPoverioc;
     @XmlElement(required = true)
     protected String duznik;
     @XmlElement(required = true)
@@ -93,13 +73,13 @@ public class Mt103 {
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar datumValute;
     @XmlElement(required = true)
-    protected String racunDuznik;
+    protected String racunDuznika;
     @XmlElement(required = true)
     protected BigInteger modelZaduzenja;
     @XmlElement(required = true)
-    protected String pozivNaBrojZaduzenja;
+    protected String pozivNaBrZaduzenja;
     @XmlElement(required = true)
-    protected String racunPoverioca;
+    protected String racunPrimaoca;
     @XmlElement(required = true)
     protected BigInteger modelOdobrenja;
     @XmlElement(required = true)
@@ -107,127 +87,7 @@ public class Mt103 {
     @XmlElement(required = true)
     protected BigDecimal iznos;
     @XmlElement(required = true)
-    protected String sifraValute;
-
-    /**
-     * Gets the value of the idPoruke property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getIdPoruke() {
-        return idPoruke;
-    }
-
-    /**
-     * Sets the value of the idPoruke property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setIdPoruke(String value) {
-        this.idPoruke = value;
-    }
-
-    /**
-     * Gets the value of the swiftBanDuznik property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSwiftBanDuznik() {
-        return swiftBanDuznik;
-    }
-
-    /**
-     * Sets the value of the swiftBanDuznik property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSwiftBanDuznik(String value) {
-        this.swiftBanDuznik = value;
-    }
-
-    /**
-     * Gets the value of the obracunskiRacBankeDuznik property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getObracunskiRacBankeDuznik() {
-        return obracunskiRacBankeDuznik;
-    }
-
-    /**
-     * Sets the value of the obracunskiRacBankeDuznik property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setObracunskiRacBankeDuznik(String value) {
-        this.obracunskiRacBankeDuznik = value;
-    }
-
-    /**
-     * Gets the value of the obracunskiRacunBankePoverioca property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getObracunskiRacunBankePoverioca() {
-        return obracunskiRacunBankePoverioca;
-    }
-
-    /**
-     * Sets the value of the obracunskiRacunBankePoverioca property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setObracunskiRacunBankePoverioca(String value) {
-        this.obracunskiRacunBankePoverioca = value;
-    }
-
-    /**
-     * Gets the value of the swiftBanPoverioc property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSwiftBanPoverioc() {
-        return swiftBanPoverioc;
-    }
-
-    /**
-     * Sets the value of the swiftBanPoverioc property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSwiftBanPoverioc(String value) {
-        this.swiftBanPoverioc = value;
-    }
+    protected String smer;
 
     /**
      * Gets the value of the duznik property.
@@ -350,27 +210,27 @@ public class Mt103 {
     }
 
     /**
-     * Gets the value of the racunDuznik property.
+     * Gets the value of the racunDuznika property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getRacunDuznik() {
-        return racunDuznik;
+    public String getRacunDuznika() {
+        return racunDuznika;
     }
 
     /**
-     * Sets the value of the racunDuznik property.
+     * Sets the value of the racunDuznika property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setRacunDuznik(String value) {
-        this.racunDuznik = value;
+    public void setRacunDuznika(String value) {
+        this.racunDuznika = value;
     }
 
     /**
@@ -398,51 +258,51 @@ public class Mt103 {
     }
 
     /**
-     * Gets the value of the pozivNaBrojZaduzenja property.
+     * Gets the value of the pozivNaBrZaduzenja property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getPozivNaBrojZaduzenja() {
-        return pozivNaBrojZaduzenja;
+    public String getPozivNaBrZaduzenja() {
+        return pozivNaBrZaduzenja;
     }
 
     /**
-     * Sets the value of the pozivNaBrojZaduzenja property.
+     * Sets the value of the pozivNaBrZaduzenja property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setPozivNaBrojZaduzenja(String value) {
-        this.pozivNaBrojZaduzenja = value;
+    public void setPozivNaBrZaduzenja(String value) {
+        this.pozivNaBrZaduzenja = value;
     }
 
     /**
-     * Gets the value of the racunPoverioca property.
+     * Gets the value of the racunPrimaoca property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getRacunPoverioca() {
-        return racunPoverioca;
+    public String getRacunPrimaoca() {
+        return racunPrimaoca;
     }
 
     /**
-     * Sets the value of the racunPoverioca property.
+     * Sets the value of the racunPrimaoca property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setRacunPoverioca(String value) {
-        this.racunPoverioca = value;
+    public void setRacunPrimaoca(String value) {
+        this.racunPrimaoca = value;
     }
 
     /**
@@ -518,27 +378,27 @@ public class Mt103 {
     }
 
     /**
-     * Gets the value of the sifraValute property.
+     * Gets the value of the smer property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getSifraValute() {
-        return sifraValute;
+    public String getSmer() {
+        return smer;
     }
 
     /**
-     * Sets the value of the sifraValute property.
+     * Sets the value of the smer property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setSifraValute(String value) {
-        this.sifraValute = value;
+    public void setSmer(String value) {
+        this.smer = value;
     }
 
 }

@@ -1,6 +1,6 @@
 package banka;
 
-import generisaniBanka.Nalog;
+import generisani.Nalog;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

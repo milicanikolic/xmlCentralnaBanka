@@ -1,5 +1,5 @@
 
-package generisaniBanka;
+package generisani;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "BankaServis", targetNamespace = "http://ftn.uns.ac.rs/banka", wsdlLocation = "http://NINA:8085/Banka/BankaServis?wsdl")
+@WebServiceClient(name = "BankaServis", targetNamespace = "http://ftn.uns.ac.rs/banka", wsdlLocation = "http://SarvanLaptop:8180/Banka/BankaServis?wsdl")
 public class BankaServis_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class BankaServis_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://NINA:8085/Banka/BankaServis?wsdl");
+            url = new URL("http://SarvanLaptop:8180/Banka/BankaServis?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

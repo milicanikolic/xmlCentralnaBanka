@@ -1,5 +1,5 @@
 
-package generisaniBanka;
+package generisani;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -8,16 +8,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for obradiNalogResponse complex type.
+ * <p>Java class for obradiZahtevZaIzvod complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="obradiNalogResponse">
+ * &lt;complexType name="obradiZahtevZaIzvod">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element ref="{http://ftn.uns.ac.rs/zahtev}zahtevZaIzvod" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,36 +27,36 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "obradiNalogResponse", propOrder = {
-    "_return"
+@XmlType(name = "obradiZahtevZaIzvod", propOrder = {
+    "zahtevZaIzvod"
 })
-public class ObradiNalogResponse {
+public class ObradiZahtevZaIzvod {
 
-    @XmlElement(name = "return", namespace = "")
-    protected String _return;
+    @XmlElement(namespace = "http://ftn.uns.ac.rs/zahtev")
+    protected ZahtevZaIzvod zahtevZaIzvod;
 
     /**
-     * Gets the value of the return property.
+     * Gets the value of the zahtevZaIzvod property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link ZahtevZaIzvod }
      *     
      */
-    public String getReturn() {
-        return _return;
+    public ZahtevZaIzvod getZahtevZaIzvod() {
+        return zahtevZaIzvod;
     }
 
     /**
-     * Sets the value of the return property.
+     * Sets the value of the zahtevZaIzvod property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link ZahtevZaIzvod }
      *     
      */
-    public void setReturn(String value) {
-        this._return = value;
+    public void setZahtevZaIzvod(ZahtevZaIzvod value) {
+        this.zahtevZaIzvod = value;
     }
 
 }

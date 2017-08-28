@@ -1,5 +1,5 @@
 
-package generisaniBanka;
+package generisani;
 
 import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -11,18 +11,18 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * <p>Java class for mt900 complex type.
+ * <p>Java class for mt910 complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="mt900">
+ * &lt;complexType name="mt910">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="idPoruke" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="swiftBanDuznik" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="obracunskiRacBanDuznik" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="swiftBanPoverioc" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="obracunskiRacBanPoverioc" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="idPorukeNaloga" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="datumValute" type="{http://www.w3.org/2001/XMLSchema}date"/>
  *         &lt;element name="iznos" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
@@ -36,23 +36,23 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "mt900", namespace = "http://ftn.uns.ac.rs/mt900", propOrder = {
+@XmlType(name = "mt910", namespace = "http://ftn.uns.ac.rs/mt910", propOrder = {
     "idPoruke",
-    "swiftBanDuznik",
-    "obracunskiRacBanDuznik",
+    "swiftBanPoverioc",
+    "obracunskiRacBanPoverioc",
     "idPorukeNaloga",
     "datumValute",
     "iznos",
     "sifraValute"
 })
-public class Mt900 {
+public class Mt910 {
 
     @XmlElement(required = true)
     protected String idPoruke;
     @XmlElement(required = true)
-    protected String swiftBanDuznik;
+    protected String swiftBanPoverioc;
     @XmlElement(required = true)
-    protected String obracunskiRacBanDuznik;
+    protected String obracunskiRacBanPoverioc;
     @XmlElement(required = true)
     protected String idPorukeNaloga;
     @XmlElement(required = true)
@@ -88,51 +88,51 @@ public class Mt900 {
     }
 
     /**
-     * Gets the value of the swiftBanDuznik property.
+     * Gets the value of the swiftBanPoverioc property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getSwiftBanDuznik() {
-        return swiftBanDuznik;
+    public String getSwiftBanPoverioc() {
+        return swiftBanPoverioc;
     }
 
     /**
-     * Sets the value of the swiftBanDuznik property.
+     * Sets the value of the swiftBanPoverioc property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setSwiftBanDuznik(String value) {
-        this.swiftBanDuznik = value;
+    public void setSwiftBanPoverioc(String value) {
+        this.swiftBanPoverioc = value;
     }
 
     /**
-     * Gets the value of the obracunskiRacBanDuznik property.
+     * Gets the value of the obracunskiRacBanPoverioc property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getObracunskiRacBanDuznik() {
-        return obracunskiRacBanDuznik;
+    public String getObracunskiRacBanPoverioc() {
+        return obracunskiRacBanPoverioc;
     }
 
     /**
-     * Sets the value of the obracunskiRacBanDuznik property.
+     * Sets the value of the obracunskiRacBanPoverioc property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setObracunskiRacBanDuznik(String value) {
-        this.obracunskiRacBanDuznik = value;
+    public void setObracunskiRacBanPoverioc(String value) {
+        this.obracunskiRacBanPoverioc = value;
     }
 
     /**

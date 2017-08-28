@@ -1,5 +1,5 @@
 
-package generisaniBanka;
+package generisani;
 
 import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;
