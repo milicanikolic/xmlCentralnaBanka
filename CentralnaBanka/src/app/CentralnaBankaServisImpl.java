@@ -51,7 +51,8 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		// *****************************************************************************************************
 		
 		// PREBACIVANJE NOVCA
-		System.out.println("CENTRALNA BANKA JE PRIMILA MT103");
+		System.out.println("*******************CENTRALNA BANKA*****************");
+		System.out.println("Metoda: PRIMI MT103");
 		String swiftDuznika=mt103.getSwiftBanDuznik();
 		
 		String upit = "for $x in doc('/content/banka.xml')/banke/banka where $x/swiftCode='"
@@ -67,7 +68,7 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("BANKA DUZNIK JE: "+bankaDuznik.getNaziv());
+		System.out.println("Banka duznika je: "+bankaDuznik.getNaziv());
 		
 		System.out.println("STANJE BANKE DUZNIKA PRE SKIDANJA NOVCA: "+bankaDuznik.getIznosObracunskiRacun());
 		bankaDuznik.setIznosObracunskiRacun(bankaDuznik.getIznosObracunskiRacun().subtract(mt103.getIznos()));
@@ -99,7 +100,7 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("BANKA POVERIOCA JE: "+bankaPoverioc.getNaziv());
+		System.out.println("Banka poverioca je: "+bankaPoverioc.getNaziv());
 		System.out.println("STANJE BANKE POVERIOCA PRE SKIDANJA NOVCA: "+bankaPoverioc.getIznosObracunskiRacun());
 		bankaPoverioc.setIznosObracunskiRacun(bankaPoverioc.getIznosObracunskiRacun().add(mt103.getIznos()));
 		System.out.println("STANJE BANKE POVERIOCA POSLE SKIDANJA NOVCA: "+bankaPoverioc.getIznosObracunskiRacun());
@@ -132,35 +133,38 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
         BankaServis inter = service
                 .getPort(portNameBanka, BankaServis.class);
 
-        System.out.println("------------slanje mt900--------------");
+        System.out.println("------------slanje mt900 banci duzniku--------------");
         inter.primiMt900(mt900);
 		
 		
-		System.out.println("KREIRANA MT900: IDPORUKE: "+mt900.getIdPoruke()+"\n SWIFTBANKEDUZNIKA: "+mt900.getSwiftBanDuznik()
+	/*	System.out.println("KREIRANA MT900: IDPORUKE: "+mt900.getIdPoruke()+"\n SWIFTBANKEDUZNIKA: "+mt900.getSwiftBanDuznik()
 				+"\n OBRACUNSKI RACUNA BANKE DUZNIKA: "+mt900.getObracunskiRacBanDuznik()+
 				"\n ID PORUKE NALOGA: "+mt900.getIdPorukeNaloga()+
 				"\n DATUM VALUTE: "+mt900.getDatumValute()
 				+"\n IZNOS:	"+mt900.getIznos()+
 				"\n SIFRA VALUTE: "+mt900.getSifraValute());
+				*/
 		
 		// SLANJE MT103 I MT910 POVERIOCU
 		// poslati mt103 preko ws za banku sa swiftKodom mt103.getSwiftBanPoverioc();
 		Mt910 mt910 = new Mt910();
 		mt910.setIdPoruke(UUID.randomUUID().toString());
 		mt910.setSwiftBanPoverioc(mt103.getSwiftBanPoverioc());
-		System.out.println("u centralnoj banci mt103 " + mt103.getObracunskiRacunBankePoverioca() );
+		
 		mt910.setObracunskiRacBanPoverioc(mt103.getObracunskiRacunBankePoverioca()); // fali u  Mt103
 		mt910.setIdPorukeNaloga(mt103.getIdPoruke());
 		mt910.setDatumValute(mt103.getDatumValute());
 		mt910.setIznos(mt103.getIznos());
 		mt910.setSifraValute(mt103.getSifraValute());
-		
+	
+		/*
 		System.out.println("KREIRANA MT910: IDPORUKE: "+mt910.getIdPoruke()+"\n SWIFT BANKE POVERIOCA: "+mt910.getSwiftBanPoverioc()
 				//+"\n OBRACUNSKI RACUNA BANKE DUZNIKA: "+mt900.getObracunskiRacBanDuznik()
 				+"\n ID PORUKE NALOGA: "+mt910.getIdPorukeNaloga()+
 				"\n DATUM VALUTE: "+mt910.getDatumValute()
 				+"\n IZNOS:	"+mt910.getIznos()+
 				"\n SIFRA VALUTE: "+mt910.getSifraValute());
+				*/
 		
 		// poslati mt910 preko ws za banku sa swiftKodom mt103.getSwiftBanPoverioc();
 		System.out.println("wsdl poverioca: "+wsdlBankaPoverilac);
@@ -188,24 +192,23 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
         mt103Novo.setSwiftBanDuznik(mt103.getSwiftBanDuznik());
         mt103Novo.setSwiftBanPoverioc(mt103.getSwiftBanPoverioc());
         
-        System.out.println("poziva iz centralne banke banku poverioca sa metodom odobriSredstva");
-        System.out.println("**************************************************");
-        System.out.println("u centralnoj banci mt103 racun poverioca " + mt103Novo.getRacunPoverioca());
+
         MT103I910 sve=new MT103I910();
         sve.setMt103N(mt103Novo);
         sve.setMt910N(mt910);
        
        
-      
+      System.out.println("------------------slanje MT103 i MT910 banci poverioca-------------------");
         inter1.odobriSredstva(sve);
-        System.out.println("pozvap jeee");
+      
 		
 	}
 
 	
 	public void primiMt102(Mt102 mt102) {
 		
-		
+		System.out.println("*******************CENTRALNA BANKA*****************");
+		System.out.println("Metoda: PRIMI MT102");
 		
 		Banka bankaDuznik=null;
 		Banka bankaPoverilac=null;
@@ -252,7 +255,7 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		//UPIS NOVIH IZNOSA U OBE BANKE
 		try {
 
-			System.out.println("UPIS U BAZU BANKE SA");
+			System.out.println("UPIS U BAZU NOVIH STANJA BANAKA");
 			// UPISIVANJE NOVIH STANJA RACUNA U BAZU
 			String upit4 = "xdmp:node-replace(doc('/content/banka.xml')/banke/banka[oznakaBanke='"
 					+ bankaPoverilac.getOznakaBanke()
@@ -285,6 +288,7 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		Service service = Service.create(wsdlBankaDunznik, serviceNameBanka);
         BankaServis inter = service
                 .getPort(portNameBanka, BankaServis.class);
+        System.out.println("-----------poslata MT900 banci duznika----------");
         inter.primiMt900(mt900);
 		
 		
@@ -302,10 +306,11 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		// poslati mt910 preko ws za banku sa swiftKodom mt102.getZaglavljeMt102().getSwiftBanPoverioc();
 
 		Service service1 = Service.create(wsdlBankaPoverilac, serviceNameBanka);
-        BankaServis inter1 = service
+        BankaServis inter1 = service1
                 .getPort(portNameBanka, BankaServis.class);
 
         //POZVATI METODU KOJA PRIMA MT102 I MT910
+        
 	}
 	
 	
