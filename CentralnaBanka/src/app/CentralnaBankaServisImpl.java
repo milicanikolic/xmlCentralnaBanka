@@ -101,9 +101,9 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 			e.printStackTrace();
 		}
 		System.out.println("Banka poverioca je: "+bankaPoverioc.getNaziv());
-		System.out.println("STANJE BANKE POVERIOCA PRE SKIDANJA NOVCA: "+bankaPoverioc.getIznosObracunskiRacun());
+		System.out.println("STANJE BANKE POVERIOCA PRE DODAVANJA NOVCA: "+bankaPoverioc.getIznosObracunskiRacun());
 		bankaPoverioc.setIznosObracunskiRacun(bankaPoverioc.getIznosObracunskiRacun().add(mt103.getIznos()));
-		System.out.println("STANJE BANKE POVERIOCA POSLE SKIDANJA NOVCA: "+bankaPoverioc.getIznosObracunskiRacun());
+		System.out.println("STANJE BANKE POVERIOCA POSLE DODAVANJA NOVCA: "+bankaPoverioc.getIznosObracunskiRacun());
 		
 		try {
 
@@ -128,7 +128,7 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		mt900.setSifraValute(mt103.getSifraValute());
 		// posalti mt900 preko ws za banku sa swiftKodom mt103.getSwiftBanDuznik();
 
-		System.out.println("wsdl duznika: "+wsdlBankaDunznik);
+		
 		Service service = Service.create(wsdlBankaDunznik, serviceNameBanka);
         BankaServis inter = service
                 .getPort(portNameBanka, BankaServis.class);
@@ -167,7 +167,7 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 				*/
 		
 		// poslati mt910 preko ws za banku sa swiftKodom mt103.getSwiftBanPoverioc();
-		System.out.println("wsdl poverioca: "+wsdlBankaPoverilac);
+		
 		Service service1 = Service.create(wsdlBankaPoverilac, serviceNameBanka);
         BankaServis inter1 = service1
                 .getPort(portNameBanka, BankaServis.class);
