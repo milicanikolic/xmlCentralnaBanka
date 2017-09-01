@@ -1,11 +1,13 @@
 package app;
 
 import generisani.BankaServis;
+import generisani.MT102I910;
 import generisani.MT103I910;
+import generisani.Mt102;
 import generisani.Mt103;
 import generisani.Mt900;
 import generisani.Mt910;
-
+import generisani.PojedinacnoPlacanjeMt102;
 
 import java.io.StringReader;
 import java.io.Writer;
@@ -23,8 +25,6 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.Service;
 
-import mt102.Mt102;
-import mt102.PojedinacnoPlacanjeMt102;
 import banka.Banka;
 
 import com.marklogic.client.eval.ServerEvaluationCall;
@@ -119,10 +119,10 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		
 		// SLANJE MT900 ZA DUZNIK BANKU
 		Mt900 mt900 = new Mt900();
-		mt900.setIdPoruke(UUID.randomUUID().toString());
+		mt900.setIdPoruke(mt103.getIdPoruke());
 		mt900.setSwiftBanDuznik(mt103.getSwiftBanDuznik());
 		mt900.setObracunskiRacBanDuznik(mt103.getObracunskiRacBankeDuznik());
-		mt900.setIdPorukeNaloga(mt103.getIdPoruke());
+		mt900.setIdPorukeNaloga("MT103");
 		mt900.setDatumValute(mt103.getDatumValute());
 		mt900.setIznos(mt103.getIznos());
 		mt900.setSifraValute(mt103.getSifraValute());
@@ -237,7 +237,9 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println("PRE BILATERALNOG NETO OBRACUNA");
+		System.out.println("iznos obracunskog racuna banke duznika: "+bankaDuznik.getIznosObracunskiRacun());
+		System.out.println("iznos obracunskog racuna banke poverioca: "+bankaPoverilac.getIznosObracunskiRacun());
 		
 		for(PojedinacnoPlacanjeMt102 pojedinacno:mt102.getPojedinacnoPlacanjeMt102()){
 			
@@ -246,16 +248,19 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 			//SKIDANJE PARA SA DUZNIKA
 			BigDecimal iznosDuznika=bankaDuznik.getIznosObracunskiRacun().subtract(pojedinacno.getIznos());
 			bankaDuznik.setIznosObracunskiRacun(iznosDuznika);
+			System.out.println("iznos obracunskog racuna banke duznika: "+bankaDuznik.getIznosObracunskiRacun());
 			
 			//DODAVANJE PARA NA POVERIOCA
 			BigDecimal iznosPoverioca=bankaPoverilac.getIznosObracunskiRacun().add(pojedinacno.getIznos());
 			bankaPoverilac.setIznosObracunskiRacun(iznosPoverioca);
+			System.out.println("iznos obracunskog racuna banke poverioca: "+bankaPoverilac.getIznosObracunskiRacun());
+			
 		}
 		
 		//UPIS NOVIH IZNOSA U OBE BANKE
 		try {
 
-			System.out.println("UPIS U BAZU NOVIH STANJA BANAKA");
+			
 			// UPISIVANJE NOVIH STANJA RACUNA U BAZU
 			String upit4 = "xdmp:node-replace(doc('/content/banka.xml')/banke/banka[oznakaBanke='"
 					+ bankaPoverilac.getOznakaBanke()
@@ -305,11 +310,19 @@ public class CentralnaBankaServisImpl implements CentralnaBankaServis{
 		mt910.setSifraValute(mt102.getZaglavljeMt102().getSifraValute());
 		// poslati mt910 preko ws za banku sa swiftKodom mt102.getZaglavljeMt102().getSwiftBanPoverioc();
 
+		MT102I910 mt102i910=new MT102I910();	
+		mt102i910.setMt102N(mt102);
+		mt102i910.setMt910N(mt910);
 		Service service1 = Service.create(wsdlBankaPoverilac, serviceNameBanka);
         BankaServis inter1 = service1
                 .getPort(portNameBanka, BankaServis.class);
 
-        //POZVATI METODU KOJA PRIMA MT102 I MT910
+      //POZVATI METODU KOJA PRIMA MT102 I MT910
+        System.out.println("-----------poslata MT102 i MT910 banci duznika----------");
+        System.out.println("zaglavlje: "+mt102i910.getMt102N().getZaglavljeMt102());
+        System.out.println(mt102i910.getMt102N().getZaglavljeMt102().getObracunskiRacBanDuznik());
+        inter1.primiMt102I910(mt102i910);
+        
         
 	}
 	

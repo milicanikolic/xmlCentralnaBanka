@@ -1,5 +1,6 @@
 package app;
 
+import generisani.Mt102;
 import generisani.Mt103;
 
 import javax.jws.WebParam;
@@ -9,8 +10,6 @@ import javax.jws.soap.SOAPBinding.ParameterStyle;
 import javax.jws.soap.SOAPBinding.Style;
 import javax.jws.soap.SOAPBinding.Use;
 import javax.xml.ws.RequestWrapper;
-
-import mt102.Mt102;
 
 
 
